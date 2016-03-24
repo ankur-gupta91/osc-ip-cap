@@ -209,6 +209,12 @@ class ListNetwork(common.NetworkAndComputeLister):
             default=False,
             help='List additional fields in output',
         )
+        parser.add_argument(
+            '--ip-availability-list',
+            action='store_true',
+            default=False,
+            help='List IP availability for network'
+        )
         return parser
 
     def take_action_network(self, client, parsed_args):
@@ -236,6 +242,19 @@ class ListNetwork(common.NetworkAndComputeLister):
                 'Network Type',
                 'Router Type',
                 'Availability Zones',
+            )
+        elif parsed_args.ip_availability_list:
+            columns = (
+                'network_id',
+                'network_name',
+                'total_ips',
+                'used_ips',
+            )
+            column_headers = (
+                'ID',
+                'Name',
+                'Total IPs',
+                'Used IPs',
             )
         else:
             columns = (
